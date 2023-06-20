@@ -1,4 +1,4 @@
-// worker.js
+// openai.js
 export async function onRequest(context) {
     const openai_url = 'https://api.openai.com/v1/chat/completions';
     const request = context.request;
