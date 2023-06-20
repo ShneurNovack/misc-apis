@@ -23,8 +23,8 @@ export async function onRequest(context) {
             const apiRes = await fetch(openai_url, {
                 method: 'POST',
                 headers: {
-                    "Content-Type': 'application/json",
-                    "Authorization': 'Bearer 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"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer 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"
                 },
                 body: JSON.stringify(openaiRequestBody),
             });
