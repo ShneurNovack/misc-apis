@@ -1,6 +1,7 @@
-// openai.js
+// worker.js
 export async function onRequest(context) {
     const openai_url = 'https://api.openai.com/v1/chat/completions';
+    const key_url = 'https://misc-api-1fl.pages.dev/openai.json';
     const request = context.request;
 
     if (request.method === 'POST') {
@@ -20,11 +21,16 @@ export async function onRequest(context) {
                 messages: transformedMessages,
             };
 
+            // Fetch the OpenAI key
+            const keyResponse = await fetch(key_url);
+            const keyData = await keyResponse.json();
+            const openai_key = keyData.openai_key;
+
             const apiRes = await fetch(openai_url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': request.headers.get('Authorization') // Get Authorization header from the incoming request
+                    'Authorization': `Bearer ${openai_key}` // Use fetched OpenAI key
                 },
                 body: JSON.stringify(openaiRequestBody),
             });
@@ -44,3 +50,4 @@ export async function onRequest(context) {
         return new Response(`Method ${request.method} Not Allowed`, { status: 405 });
     }
 }
+
