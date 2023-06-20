@@ -35,11 +35,14 @@ export async function onRequest(context) {
                 body: JSON.stringify(openaiRequestBody),
             });
 
-            // Pass the response back to the browser
-            return new Response(apiRes.body, {
+            // Extract the message content from the API response
+            const apiData = await apiRes.json();
+            const messageContent = apiData.choices[0]?.message?.content;
+
+            // Pass the message content back to the browser
+            return new Response(messageContent || 'No response from assistant', {
                 status: apiRes.status,
-                statusText: apiRes.statusText,
-                headers: apiRes.headers
+                statusText: apiRes.statusText
             });
 
         } catch (error) {
@@ -50,4 +53,3 @@ export async function onRequest(context) {
         return new Response(`Method ${request.method} Not Allowed`, { status: 405 });
     }
 }
-
