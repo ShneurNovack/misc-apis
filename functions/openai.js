@@ -24,7 +24,7 @@ export async function onRequest(context) {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer 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"
+                    "Authorization": "Bearer ${process.env.OPENAI_KEY}"
                 },
                 body: JSON.stringify(openaiRequestBody),
             });
