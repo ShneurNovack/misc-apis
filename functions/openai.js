@@ -1,4 +1,4 @@
-// openai.js
+// worker.js
 export async function onRequest(context) {
     const openai_url = 'https://api.openai.com/v1/chat/completions';
     const request = context.request;
@@ -23,8 +23,8 @@ export async function onRequest(context) {
             const apiRes = await fetch(openai_url, {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer __OPENAI_KEY__"
+                    'Content-Type': 'application/json',
+                    'Authorization': request.headers.get('Authorization') // Get Authorization header from the incoming request
                 },
                 body: JSON.stringify(openaiRequestBody),
             });
