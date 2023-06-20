@@ -18,7 +18,6 @@ export async function onRequest(context) {
             const palmRequestBody = {
                 temperature: 0.7,
                 candidateCount: 1,
-                max_tokens: 15,
                 prompt: {
                     context: "Respond using 4 sentences or less",
                     messages: transformedMessages,
