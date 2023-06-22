@@ -44,6 +44,7 @@ export async function onRequest(context) {
                         "time": formattedDate,
                         "amount": donation.attributes.real_payment,
                         "currency": donation.attributes.currency_code,
+                        "currency_sign": donation.attributes.currency_sign,
                         "covered_processing_fee": donation.attributes.covered_processing_fee
                     }
                 });
