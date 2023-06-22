@@ -1,4 +1,4 @@
-// donations.js
+// analyzedonations.js
 export async function onRequest(context) {
     const request = context.request;
     
@@ -37,7 +37,7 @@ export async function onRequest(context) {
                 return {
                     "donor_name": donation.attributes.name,
                     "time": formattedDate,
-                    "amount": donation.attributes.total,
+                    "amount": donation.attributes.real_payment,
                     "currency": donation.attributes.currency_code,
                     "covered_processing_fee": donation.attributes.covered_processing_fee
                 }
