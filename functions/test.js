@@ -111,16 +111,21 @@ function analyzePeakTimes(times, days) {
         }
     });
 
+    const totalDonations = times.length;
+
     const maxTimesOccurrences = Math.max(...Object.values(timesOccurrences));
     const topActiveHour = getKeyByValue(timesOccurrences, maxTimesOccurrences);
+    const topHourPercentage = ((maxTimesOccurrences / totalDonations) * 100).toFixed(2);
     delete timesOccurrences[topActiveHour];
 
     const secondMaxTimesOccurrences = Math.max(...Object.values(timesOccurrences));
     const secondActiveHour = getKeyByValue(timesOccurrences, secondMaxTimesOccurrences);
+    const secondHourPercentage = ((secondMaxTimesOccurrences / totalDonations) * 100).toFixed(2);
     delete timesOccurrences[secondActiveHour];
 
     const thirdMaxTimesOccurrences = Math.max(...Object.values(timesOccurrences));
     const thirdActiveHour = getKeyByValue(timesOccurrences, thirdMaxTimesOccurrences);
+    const thirdHourPercentage = ((thirdMaxTimesOccurrences / totalDonations) * 100).toFixed(2);
 
     const dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const maxDaysOccurrences = Math.max(...Object.values(daysOccurrences));
@@ -128,9 +133,18 @@ function analyzePeakTimes(times, days) {
 
     return {
         "most_active_hours": {
-            "top_active_hour": convertHourTo12HourFormat(topActiveHour),
-            "second_active_hour": convertHourTo12HourFormat(secondActiveHour),
-            "third_active_hour": convertHourTo12HourFormat(thirdActiveHour)
+            "top_active_hour": {
+                "hour": convertHourTo12HourFormat(topActiveHour),
+                "percentage": `${topHourPercentage}%`
+            },
+            "second_active_hour": {
+                "hour": convertHourTo12HourFormat(secondActiveHour),
+                "percentage": `${secondHourPercentage}%`
+            },
+            "third_active_hour": {
+                "hour": convertHourTo12HourFormat(thirdActiveHour),
+                "percentage": `${thirdHourPercentage}%`
+            }
         },
         "most_active_day": mostActiveDay
     }
