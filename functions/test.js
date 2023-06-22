@@ -33,7 +33,7 @@ export async function onRequest(context) {
                 'messages': [
                     {
                         'role': 'system',
-                        'content': 'Response Format: keep the why section to a 3 sentence minimum and the tip sections to 2. Your response MUST be in the following JSON format and nothing else: {\"ai_analysis\": {\"sections\": {\"why\": {\"title\": \"\", \"body\": \"\"}, \"tip1\": {\"title\": \"\", \"body\": \"\"}, \"tip2\": {\"title\": \"\", \"body\": \"\"}}}} /n Past campaign data:' + JSON.stringify(data1)
+                        'content': 'Given the following analysis, dig deeper into the reasons behind these trends, suggest why and how the might occur, and suggest ways to leverage them for improved fundraising outcomes. Response Format: keep the why section to a 3 sentence minimum and the tip sections to 2. Your response MUST be in the following JSON format and nothing else: {\"ai_analysis\": {\"sections\": {\"why\": {\"title\": \"\", \"body\": \"\"}, \"tip1\": {\"title\": \"\", \"body\": \"\"}, \"tip2\": {\"title\": \"\", \"body\": \"\"}}}} /n Context: This is a website were a Chabad Shliach can analyze the data from their past fundraising campaigns in order to help them strategize for upcoming campaigns. /n Past campaign data:' + JSON.stringify(data1)
                     }
                 ],
                 'temperature': 0.7
