@@ -9,7 +9,7 @@ export async function onRequest(context) {
     const allDonations = [];
 
     try {
-        const campaignRes = await fetch('https://api.charidy.com/api/v1/categories/campaigns?search=chabad&limit=3');
+        const campaignRes = await fetch('https://api.charidy.com/api/v1/categories/campaigns?search=chabad&limit=5');
         const campaignData = await campaignRes.json();
         const campaignIDs = campaignData.data.map(campaign => campaign.attributes.campaign_id);
 
