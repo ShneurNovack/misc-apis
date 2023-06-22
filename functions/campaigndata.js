@@ -74,7 +74,7 @@ export async function onRequest(context) {
             headers: { 'content-type': 'application/json' },
         });
     } catch (error) {
-        return new Response('Error calling API', { status: 500 });
+    return new Response(`Error calling API: ${error.message}`, { status: 500 });
     }
 }
 
