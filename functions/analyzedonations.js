@@ -8,6 +8,7 @@ export async function onRequest(context) {
   
     const url = new URL(request.url);
     const campaignIDsParam = url.searchParams.get('id');
+    const timezone = url.searchParams.get('timezone') || 'UTC'; // Default to UTC if no timezone is provided
 
     if (!campaignIDsParam) {
         return new Response('Missing campaign id', { status: 400 });
@@ -37,7 +38,7 @@ export async function onRequest(context) {
 
                 const result = data.data.map(donation => {
                     const date = new Date(donation.attributes.created_at * 1000);
-                    const formattedDate = date.toLocaleString('en-US');
+                    const formattedDate = date.toLocaleString('en-US', { timeZone: timezone });
                     return {
                         "donor_name": donation.attributes.name,
                         "time": formattedDate,
@@ -80,25 +81,37 @@ export async function onRequest(context) {
     };
 
     return new Response(JSON.stringify(result), {
-        headers: { 'content-type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
     });
 }
-
-function countOccurrences(arr) {
-    return arr.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {});
-}
-
+  
+// Helper function to get key by value
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-function analyzePeakTimes(donationTimes, donationDays) {
-    const timesOccurrences = countOccurrences(donationTimes);
-    const daysOccurrences = countOccurrences(donationDays);
+// Analysis functions
+function analyzePeakTimes(times, days) {
+    const timesOccurrences = {};
+    const daysOccurrences = {};
+
+    times.forEach(time => {
+        if (timesOccurrences[time]) {
+            timesOccurrences[time]++;
+        } else {
+            timesOccurrences[time] = 1;
+        }
+    });
+
+    days.forEach(day => {
+        if (daysOccurrences[day]) {
+            daysOccurrences[day]++;
+        } else {
+            daysOccurrences[day] = 1;
+        }
+    });
 
     const maxTimesOccurrences = Math.max(...Object.values(timesOccurrences));
-    const maxDaysOccurrences = Math.max(...Object.values(daysOccurrences));
-
     const topActiveHour = getKeyByValue(timesOccurrences, maxTimesOccurrences);
     delete timesOccurrences[topActiveHour];
 
@@ -110,6 +123,7 @@ function analyzePeakTimes(donationTimes, donationDays) {
     const thirdActiveHour = getKeyByValue(timesOccurrences, thirdMaxTimesOccurrences);
 
     const dayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const maxDaysOccurrences = Math.max(...Object.values(daysOccurrences));
     const mostActiveDay = dayLabels[getKeyByValue(daysOccurrences, maxDaysOccurrences)];
 
     return {
