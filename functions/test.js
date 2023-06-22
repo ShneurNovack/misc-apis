@@ -33,9 +33,7 @@ export async function onRequest(context) {
                 'messages': [
                     {
                         'role': 'system',
-                        'content': 'Response Format:
-keep the "why" section to a 3 sentence minimum and the "tip" sections to 2.
-Your response MUST be in the following JSON format and nothing else:' + JSON.stringify(data1)
+                        'content': 'Response Format: 'keep the why section to a 3 sentence minimum and the tip sections to 2. Your response MUST be in the following JSON format and nothing else:' + JSON.stringify(data1)
                     }
                 ],
                 'temperature': 0.7
