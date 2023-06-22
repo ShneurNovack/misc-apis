@@ -13,7 +13,7 @@ export async function onRequest(context) {
         return new Response('Missing campaign id', { status: 400 });
     }
 
-    const api_url = `https://api.charidy.com/api/v1/campaign/${campaignID}/donations?limit=999`;
+    const api_url = `https://api.charidy.com/api/v1/campaign/${campaignID}/donations?limit=100`;
 
     try {
         const apiRes = await fetch(api_url);
