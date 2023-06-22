@@ -32,9 +32,11 @@ export async function onRequest(context) {
             }
 
             const result = data.data.map(donation => {
+                const date = new Date(donation.attributes.created_at * 1000);
+                const formattedDate = date.toLocaleString('en-US');
                 return {
                     "donor_name": donation.attributes.name,
-                    "time": donation.attributes.created_at,
+                    "time": formattedDate,
                     "amount": donation.attributes.total,
                     "currency": donation.attributes.currency_code,
                     "covered_processing_fee": donation.attributes.covered_processing_fee
