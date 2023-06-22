@@ -66,9 +66,10 @@ export async function onRequest(context) {
     for (const donation of allDonations) {
         const donationDate = new Date(donation.time);
         const hour = donationDate.getHours();
+        const hour12format = hour > 12 ? `${hour - 12} PM` : `${hour} AM`;
         const day = donationDate.toLocaleDateString('en-US', { weekday: 'long' });
 
-        hoursMap[hour] = (hoursMap[hour] || 0) + 1;
+        hoursMap[hour12format] = (hoursMap[hour12format] || 0) + 1;
         daysMap[day] = (daysMap[day] || 0) + 1;
         totalDonations += donation.amount;
         if (donation.covered_processing_fee) {
@@ -78,16 +79,17 @@ export async function onRequest(context) {
         for (let i = 0; i < topDonations.length; i++) {
             if (!topDonations[i] || donation.amount > topDonations[i].amount) {
                 topDonations.splice(i, 0, donation);
-                topDonations.length = 3;
                 break;
             }
         }
     }
 
-    const sortedHours = Object.entries(hoursMap).sort((a, b) => b[1] - a[1]).slice(0, 3).map(hour => `${hour[0]}:00`);
+    topDonations.length = 3;
+
+    const sortedHours = Object.entries(hoursMap).sort((a, b) => b[1] - a[1]).slice(0, 3).map(hour => hour[0]);
     const sortedDays = Object.entries(daysMap).sort((a, b) => b[1] - a[1])[0][0];
     const averageDonation = totalDonations / allDonations.length;
-    const percentageCovered = (totalProcessingFeeCoverage / allDonations.length) * 100;
+    const percentageCovered = totalProcessingFeeCoverage / allDonations.length * 100;
 
     const response = {
         "analysis_results": {
