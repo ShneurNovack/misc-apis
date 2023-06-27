@@ -22,12 +22,10 @@ export async function onRequest(context) {
         });
         const apiData = await apiRes.json();
 
+        // Process each data item and format the output
         const responseData = apiData.data.map(team => {
-            let totalPledgedAmount = 0;
-            if (Array.isArray(team.pledges)) {
-                totalPledgedAmount = team.pledges.reduce((total, pledge) => total + pledge.amount, 0);
-            }
-            const percentComplete = ((totalPledgedAmount / team.goal) * 100).toFixed(2) + "%";
+            const totalPledgesAmount = team.pledges.reduce((sum, pledge) => sum + pledge.amount, 0);
+            const percentComplete = ((totalPledgesAmount / team.goal) * 100).toFixed(2) + "%";
 
             return {
                 id: team.id,
@@ -35,7 +33,7 @@ export async function onRequest(context) {
                 goal: team.goal,
                 percent_complete: percentComplete,
                 description: team.description,
-                mitzvah_amount: team.pledges.length,
+                mitzvah_amount: totalPledgesAmount,
                 campaign: team.campaign,
             }
         });
