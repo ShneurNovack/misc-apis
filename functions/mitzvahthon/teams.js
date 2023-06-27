@@ -22,18 +22,22 @@ export async function onRequest(context) {
         });
         const apiData = await apiRes.json();
 
-        // Process each data item and format the output
         const responseData = apiData.data.map(team => {
-            const totalPledges = team.pledges.reduce((total, pledge) => total + pledge.amount, 0);
-            const percentComplete = ((totalPledges / team.goal) * 100).toFixed(2) + '%';
+            let totalPledgedAmount = 0;
+            if (Array.isArray(team.pledges)) {
+                totalPledgedAmount = team.pledges.reduce((total, pledge) => total + pledge.amount, 0);
+            }
+            const percentComplete = ((totalPledgedAmount / team.goal) * 100).toFixed(2) + "%";
+
             return {
                 id: team.id,
                 name: team.name,
                 goal: team.goal,
                 percent_complete: percentComplete,
                 description: team.description,
+                mitzvah_amount: team.pledges.length,
                 campaign: team.campaign,
-            };
+            }
         });
 
         return new Response(JSON.stringify(responseData), {
