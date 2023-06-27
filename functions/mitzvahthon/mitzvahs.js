@@ -7,11 +7,11 @@ export async function onRequest(context) {
     }
 
     const url = new URL(request.url || '');
-    const campaignID = url.searchParams.get('campaignID') || '';
+    const campaignID = url.searchParams.get('id') || '';
     const timezone = url.searchParams.get('timezone') || 'UTC';
 
     if (!campaignID) {
-        return new Response('Missing campaignID', { status: 400 });
+        return new Response('Missing id', { status: 400 });
     }
 
     const apiUrl = `https://api.shneurnovack.com/items/mitzvas?filter[campaign][_eq]=${campaignID}`;
