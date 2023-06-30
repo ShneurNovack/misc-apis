@@ -29,8 +29,8 @@ function parseRSS(rssText) {
 function parseItem(itemText) {
   const title = getTextBetweenTags(itemText, 'title');
   const link = getTextBetweenTags(itemText, 'link');
-  const description = getTextBetweenCData(itemText, 'description');
-  const pubDate = getTextBetweenCData(itemText, 'dc:date');
+  const description = getTextBetweenTags(itemText, 'description');
+  const pubDate = getTextBetweenTags(itemText, 'dc:date');
 
   return { title, link, description, pubDate };
 }
