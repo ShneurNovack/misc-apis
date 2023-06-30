@@ -25,6 +25,7 @@ export async function onRequest(context) {
         const responseData = apiData.data.map(item => ({
             id: item.id,
             name: item.name,
+            name: item.keywords,
         }));
 
         return new Response(JSON.stringify(responseData), {
