@@ -57,7 +57,7 @@ paths:
           schema:
             type: string
             example: '1'
-          description: Note category ID (get category ID from the "get categories" request)
+          description: Note category ID, every note needs a category, get category ID from the "get categories" request
       requestBody:
         content:
           text/plain:
