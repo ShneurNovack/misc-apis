@@ -2,7 +2,7 @@ export async function onRequest(context) {
   const request = new Request('https://www.chabad.org/tools/rss/parsha_rss.xml');
   const response = await fetch(request);
   const rssText = await response.text();
-  
+
   const items = parseRSS(rssText);
   
   return new Response(JSON.stringify(items), {
@@ -15,7 +15,7 @@ function parseRSS(rssText) {
 
   // Regular expression to match each item in the RSS feed.
   const itemRegex = /<item>([\s\S]*?)<\/item>/gm;
-  
+
   let match;
   while (match = itemRegex.exec(rssText)) {
     const itemText = match[1];
@@ -32,7 +32,7 @@ function parseRSS(rssText) {
 }
 
 function getTextBetweenTags(text, tag) {
-  const regex = new RegExp(`<${tag}><!\\[CDATA\\[(.*?)\\]\\]><\/${tag}>`, 'gs');
+  const regex = new RegExp(`<${tag}>\\s*<!\\[CDATA\\[(.*?)\\]\\]>\\s*<\/${tag}>`, 'gs');
   const match = regex.exec(text);
   return match ? match[1] : null;
 }
