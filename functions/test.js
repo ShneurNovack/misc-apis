@@ -3,6 +3,8 @@ export async function onRequest(context) {
   const response = await fetch(request);
   const rssText = await response.text();
 
+  console.log(rssText);  // Add this line
+
   const items = parseRSS(rssText);
 
   return new Response(JSON.stringify(items), {
