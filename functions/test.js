@@ -4,35 +4,43 @@ export async function onRequest(context) {
   const rssText = await response.text();
 
   const items = parseRSS(rssText);
-  
+
   return new Response(JSON.stringify(items), {
     headers: { 'content-type': 'application/json' },
   });
 }
 
 function parseRSS(rssText) {
-  let items = [];
-
-  // Regular expression to match each item in the RSS feed.
-  const itemRegex = /<item>([\s\S]*?)<\/item>/gm;
-
+  const items = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
   let match;
+
   while (match = itemRegex.exec(rssText)) {
     const itemText = match[1];
-    
-    const title = getTextBetweenTags(itemText, 'title');
-    const link = getTextBetweenTags(itemText, 'link');
-    const description = getTextBetweenTags(itemText, 'description');
-    const pubDate = getTextBetweenTags(itemText, 'dc:date');
-
-    items.push({ title, link, description, pubDate });
+    const item = parseItem(itemText);
+    items.push(item);
   }
-  
+
   return items;
 }
 
+function parseItem(itemText) {
+  const title = getTextBetweenTags(itemText, 'title');
+  const link = getTextBetweenTags(itemText, 'link');
+  const description = getTextBetweenCData(itemText, 'description');
+  const pubDate = getTextBetweenCData(itemText, 'dc:date');
+
+  return { title, link, description, pubDate };
+}
+
 function getTextBetweenTags(text, tag) {
-  const regex = new RegExp(`<${tag}>\\s*<!\\[CDATA\\[(.*?)\\]\\]>\\s*<\/${tag}>`, 'gs');
+  const regex = new RegExp(`<${tag}>(.*?)<\/${tag}>`, 'i');
   const match = regex.exec(text);
-  return match ? match[1] : null;
+  return match ? match[1].trim() : null;
+}
+
+function getTextBetweenCData(text, tag) {
+  const regex = new RegExp(`<${tag}><!\\[CDATA\\[(.*?)\\]\\]><\/${tag}>`, 'i');
+  const match = regex.exec(text);
+  return match ? match[1].trim() : null;
 }
