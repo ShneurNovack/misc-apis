@@ -7,7 +7,7 @@ export async function onRequest(context) {
     }
 
     const url = new URL(request.url || '');
-    const category = url.searchParams.get('categoryid') || '';
+    const categoryid = url.searchParams.get('categoryid') || '';
 
     let apiUrl = `https://api.shneurnovack.com/items/notes?fields=*.*`;
 
