@@ -23,7 +23,7 @@ function parseRSS(rssText) {
     const title = getTextBetweenTags(itemText, 'title');
     const link = getTextBetweenTags(itemText, 'link');
     const description = getTextBetweenTags(itemText, 'description');
-    const pubDate = getTextBetweenTags(itemText, 'pubDate');
+    const pubDate = getTextBetweenTags(itemText, 'dc:date');
 
     items.push({ title, link, description, pubDate });
   }
