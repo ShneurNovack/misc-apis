@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Tasks and Notes
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: https://api.reshapecreative.com
+paths:
+  /manage/notes:
+    get:
+      summary: Get notes
+      description: |-
+        Gets users notes.  
+
+        to get category IDs use the "get categories" request
+      operationId: getNotes
+      parameters:
+        - name: categoryid
+          in: query
+          schema:
+            type: string
+            example: '2'
+          description: >-
+            (optional) if you want to filter the notes by thier category id you
+            may use this param
+      responses:
+        '200':
+          description: ''
+  /manage/categories:
+    get:
+      summary: Get categories
+      description: Gets a list of categories and their IDs
+      operationId: getCategories
+      responses:
+        '200':
+          description: ''
+  /manage/addnote:
+    post:
+      summary: Add note
+      description: |-
+        Add a note
+
+        here is how the request body JSON should look:
+
+        {
+        "title": "TITLE", // title of the note
+        "body": "BODY", //body of the note
+        "category": 0 // ID of the category of the note
+        }
+
+        get category ID from the "get categories" request
+      operationId: addNote
+      requestBody:
+        content:
+          text/plain:
+            example: "{\r\n    \"title\": \"TITLE\", // title of the note\r\n    \"body\": \"BODY\",  //body of the note\r\n    \"category\": 0  // ID of the category of the note\r\n  }"
+      responses:
+        '200':
+          description: ''
+  /manage/addcategory:
+    post:
+      summary: Add category
+      description: |-
+        Add a category  
+
+        The request body looks like this:
+
+        {  
+        "name": "TITLE" // name of the note category  
+        }
+      operationId: addCategory
+      requestBody:
+        content:
+          text/plain:
+            example: "{\r\n    \"name\": \"NAME\" // name of the note category\r\n}"
+      responses:
+        '200':
+          description: ''
+tags: []
