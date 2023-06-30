@@ -7,12 +7,12 @@ export async function onRequest(context) {
     }
 
     const url = new URL(request.url || '');
-    const category = url.searchParams.get('category') || '';
+    const category = url.searchParams.get('categoryid') || '';
 
     let apiUrl = `https://api.shneurnovack.com/items/notes?fields=*.*`;
 
-    if (category) {
-        apiUrl += `&filter[campaign][_eq]=${category}`;
+    if (categoryid) {
+        apiUrl += `&filter[category][_eq]=${categoryid}`;
     }
 
     try {
