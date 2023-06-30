@@ -35,25 +35,33 @@ paths:
         '200':
           description: ''
   /manage/addnote:
-    post:
+    get:
       summary: Add note
-      description: |-
-        Add a note
-
-        here is how the request body JSON should look:
-
-        {
-        "title": "TITLE", // title of the note
-        "body": "BODY", //body of the note
-        "category": 0 // ID of the category of the note
-        }
-
-        get category ID from the "get categories" request
+      description: add a note
       operationId: addNote
+      parameters:
+        - name: title
+          in: query
+          schema:
+            type: string
+            example: test%20test
+          description: Note title (must be url safe)
+        - name: body
+          in: query
+          schema:
+            type: string
+            example: helo%20world
+          description: Note body (must be url safe)
+        - name: category
+          in: query
+          schema:
+            type: string
+            example: '1'
+          description: Note category ID (get category ID from the "get categories" request)
       requestBody:
         content:
           text/plain:
-            example: "{\r\n    \"title\": \"TITLE\", // title of the note\r\n    \"body\": \"BODY\",  //body of the note\r\n    \"category\": 0  // ID of the category of the note\r\n  }"
+            example: ''
       responses:
         '200':
           description: ''
