@@ -18,7 +18,10 @@ export async function onRequest(context) {
     try {
         const apiRes = await fetch(apiUrl, {
             headers: {
-                'Authorization': `Bearer ${auth_token}`
+                'Authorization': `Bearer ${auth_token}`,
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0',
             }
         });
         const apiData = await apiRes.json();
