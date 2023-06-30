@@ -1,43 +1,38 @@
 export async function onRequest(context) {
-    const url = 'https://www.chabad.org/tools/rss/parsha_rss.xml';
-    const response = await fetch(url);
-    const rssText = await response.text();
+  const request = new Request('https://www.chabad.org/tools/rss/parsha_rss.xml');
+  const response = await fetch(request);
+  const rssText = await response.text();
+  
+  const items = parseRSS(rssText);
+  
+  return new Response(JSON.stringify(items), {
+    headers: { 'content-type': 'application/json' },
+  });
+}
 
-    const parser = new DOMParser();
-    const rssDocument = parser.parseFromString(rssText, 'application/xml');
+function parseRSS(rssText) {
+  let items = [];
 
-    let json = { 'channel': {} };
-    let channel = rssDocument.children[0].children[0];
-    for(let i = 0; i < channel.children.length; i++) {
-        let current = channel.children[i];
-        switch(current.tagName) {
-            case 'title':
-            case 'link':
-            case 'description':
-            case 'copyright':
-            case 'lastBuildDate':
-            case 'pubDate':
-                json['channel'][current.tagName] = current.textContent;
-                break;
-            case 'image':
-                let image = {};
-                for(let j = 0; j < current.children.length; j++) {
-                    let imgCurrent = current.children[j];
-                    image[imgCurrent.tagName] = imgCurrent.textContent;
-                }
-                json['channel']['image'] = image;
-                break;
-            case 'item':
-                if(!json['channel']['items']) json['channel']['items'] = [];
-                let item = {};
-                for(let j = 0; j < current.children.length; j++) {
-                    let itemCurrent = current.children[j];
-                    item[itemCurrent.tagName] = itemCurrent.textContent;
-                }
-                json['channel']['items'].push(item);
-                break;
-        }
-    }
+  // Regular expression to match each item in the RSS feed.
+  const itemRegex = /<item>([\s\S]*?)<\/item>/gm;
+  
+  let match;
+  while (match = itemRegex.exec(rssText)) {
+    const itemText = match[1];
+    
+    const title = getTextBetweenTags(itemText, 'title');
+    const link = getTextBetweenTags(itemText, 'link');
+    const description = getTextBetweenTags(itemText, 'description');
+    const pubDate = getTextBetweenTags(itemText, 'pubDate');
 
-    return new Response(JSON.stringify(json), { headers: { 'content-type': 'application/json' } });
+    items.push({ title, link, description, pubDate });
+  }
+  
+  return items;
+}
+
+function getTextBetweenTags(text, tag) {
+  const regex = new RegExp(`<${tag}><!\\[CDATA\\[(.*?)\\]\\]><\/${tag}>`, 'gs');
+  const match = regex.exec(text);
+  return match ? match[1] : null;
 }
