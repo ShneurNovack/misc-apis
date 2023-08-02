@@ -25,7 +25,7 @@ export async function onRequest(context) {
         // Compute the percentage complete and mitzvahs count
         const totalAmount = apiData.data.mitzvahs.reduce((sum, mitzvah) => sum + mitzvah.amount, 0);
         const percentComplete = ((totalAmount / Number(apiData.data.goal)) * 100).toFixed(2) + '%';
-        const mitzvahsAmount = apiData.data.mitzvahs.length;
+        const mitzvahsAmount = totalAmount.toString();
 
         // Construct the response object
         const response = {
@@ -33,7 +33,7 @@ export async function onRequest(context) {
                 campaign_name: apiData.data.campaign_name,
                 goal: apiData.data.goal,
                 precent_complete: percentComplete,
-                mitzvahs_amount: mitzvahsAmount.toString(),
+                mitzvahs_amount: mitzvahsAmount,
             }
         };
 
