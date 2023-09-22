@@ -14,7 +14,7 @@ export async function onRequest(context) {
         return new Response('Missing id', { status: 400 });
     }
 
-    const apiUrl = `https://api.shneurnovack.com/items/mitzvas?filter[campaign][_eq]=${campaignID}`;
+    const apiUrl = `https://api.shneurnovack.com/items/mitzvas?limit=-1&filter[campaign][_eq]=${campaignID}`;
     try {
         const apiRes = await fetch(apiUrl, {
             headers: {
