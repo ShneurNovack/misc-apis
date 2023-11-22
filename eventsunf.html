@@ -1,0 +1,103 @@
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('https://shneurcors.herokuapp.com/https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/eventSchedules/chabadunf?occurrenceStatus=Upcoming')
+    .then(response => response.json())
+    .then(data => {
+        const events = data.payload.results;
+        const container = document.getElementById('events-container');
+        events.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.classList.add('event');
+
+            eventElement.innerHTML = `
+                <img class="event-image" src="${event.imageURL}" alt="${event.name}">
+                <div class="event-details">
+                    <div class="event-title">${event.name}</div>
+                    <div class="event-date-time">${event.formattedDate} at ${event.formattedEventScheduleTime}</div>
+                    <div class="event-location">${event.locationDisplay}</div>
+                    <a href="https://student.chabadoncampus.org/rsvp/chabadunf/${event.eventScheduleID}" class="rsvp-button">RSVP</a>
+                </div>
+            `;
+            container.appendChild(eventElement);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+<style>
+div#events-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#events-container .event {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    display: flex;
+    min-width: 200px;
+    max-width: 300px;
+    flex-direction: column;
+    font-family: poppins;
+}
+
+.event-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.event-details {
+    margin-top: 5px;
+}
+
+.event-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.event-date-time, .event-location {
+    font-size: 0.9em;
+}
+
+.rsvp-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('https://shneurcors.herokuapp.com/https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/eventSchedules/chabadunf?occurrenceStatus=Upcoming')
+    .then(response => response.json())
+    .then(data => {
+        const events = data.payload.results;
+        const container = document.getElementById('events-container');
+        events.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.classList.add('event');
+
+            eventElement.innerHTML = `
+                <img class="event-image" src="${event.imageURL}" alt="${event.name}">
+                <div class="event-details">
+                    <div class="event-title">${event.name}</div>
+                    <div class="event-date-time">${event.formattedDate} at ${event.formattedEventScheduleTime}</div>
+                    <div class="event-location">${event.locationDisplay}</div>
+                    <a href="https://student.chabadoncampus.org/rsvp/chabadunf/${event.eventScheduleID}" class="rsvp-button">RSVP</a>
+                </div>
+            `;
+            container.appendChild(eventElement);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+</script>
