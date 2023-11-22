@@ -1,27 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('https://shneurcors.herokuapp.com/https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/eventSchedules/chabadunf?occurrenceStatus=Upcoming')
-    .then(response => response.json())
-    .then(data => {
-        const events = data.payload.results;
-        const container = document.getElementById('events-container');
-        events.forEach(event => {
-            const eventElement = document.createElement('div');
-            eventElement.classList.add('event');
-
-            eventElement.innerHTML = `
-                <img class="event-image" src="${event.imageURL}" alt="${event.name}">
-                <div class="event-details">
-                    <div class="event-title">${event.name}</div>
-                    <div class="event-date-time">${event.formattedDate} at ${event.formattedEventScheduleTime}</div>
-                    <div class="event-location">${event.locationDisplay}</div>
-                    <a href="https://student.chabadoncampus.org/rsvp/chabadunf/${event.eventScheduleID}" class="rsvp-button">RSVP</a>
-                </div>
-            `;
-            container.appendChild(eventElement);
-        });
-    })
-    .catch(error => console.error('Error:', error));
-});
+<div id="events-container">
+    <!-- Events will be loaded here by JavaScript -->
+</div>
 
 <style>
 div#events-container {
