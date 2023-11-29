@@ -19,6 +19,9 @@ export async function onRequest(context) {
             return accumulator;
         }, []);
 
+        // Sort the events by date
+        combinedData.sort((a, b) => new Date(a.eventDateTime) - new Date(b.eventDateTime));
+
         return new Response(JSON.stringify(combinedData), {
             headers: { 'Content-Type': 'application/json' },
         });
