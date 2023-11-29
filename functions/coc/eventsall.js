@@ -5,20 +5,20 @@ export async function onRequest(context) {
         const apiUrl = `https://shneurcors.herokuapp.com/https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/${chabadId}/EventSchedules?occurrenceStatus=Upcoming`;
         
         try {
-            const apiRes = await fetch(apiUrl, {
-                headers: {
-                    'chabad': `true`
-                }
-            });
+            const apiRes = await fetch(apiUrl);
 
             if (!apiRes.ok) {
+                console.log(`Request failed for CHABAD-ID ${chabadId}: ${apiRes.status}`);
                 continue; // Skip if the response is not OK
             }
 
             const apiData = await apiRes.json();
-            combinedData.push(...apiData.payload.results);
+            if (apiData && apiData.payload && apiData.payload.results) {
+                combinedData.push(...apiData.payload.results);
+            } else {
+                console.log(`No valid data for CHABAD-ID ${chabadId}`);
+            }
         } catch (error) {
-            // Log the error but continue processing other IDs
             console.log(`Error fetching data for CHABAD-ID ${chabadId}: ${error}`);
         }
     }
