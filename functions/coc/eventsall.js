@@ -1,6 +1,14 @@
 export async function onRequest(context) {
     const fetchPromises = [];
 
+    // Fetch Chabad centers
+    const chabadCentersRes = await fetch("https://api.chabadoncampus.org/api/1.0/ChabadHouses/public");
+    const chabadCenters = await chabadCentersRes.json();
+    const chabadCenterMap = chabadCenters.reduce((map, center) => {
+        map[center.id] = center.name;
+        return map;
+    }, {});
+
     for (let chabadId = 1; chabadId <= 101; chabadId++) {
         const apiUrl = `https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/${chabadId}/EventSchedules?occurrenceStatus=Upcoming`;
         fetchPromises.push(
@@ -14,7 +22,13 @@ export async function onRequest(context) {
         const allResults = await Promise.all(fetchPromises);
         const combinedData = allResults.reduce((accumulator, current) => {
             if (current && current.payload && current.payload.results) {
-                return accumulator.concat(current.payload.results);
+                const enrichedEvents = current.payload.results.map(event => {
+                    return {
+                        ...event,
+                        chabadCenterName: chabadCenterMap[event.chabadHouseID] || 'Unknown Center'
+                    };
+                });
+                return accumulator.concat(enrichedEvents);
             }
             return accumulator;
         }, []);
