@@ -2,7 +2,7 @@ export async function onRequest(context) {
     const fetchPromises = [];
 
     for (let chabadId = 1; chabadId <= 101; chabadId++) {
-        const apiUrl = `https://shneurcors.herokuapp.com/https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/${chabadId}/EventSchedules?occurrenceStatus=Upcoming`;
+        const apiUrl = `https://api.chabadoncampus.org/api/1.0/RsvpEnrollments/${chabadId}/EventSchedules?occurrenceStatus=Upcoming`;
         fetchPromises.push(
             fetch(apiUrl)
             .then(response => response.ok ? response.json() : Promise.reject(`Failed with status ${response.status}`))
