@@ -17,7 +17,7 @@ export async function onRequest(context) {
 
             const openaiRequestBody = {
                 temperature: 0.7,
-                model: "gpt-3.5-turbo",
+                model: "gpt-4-0125-preview",
                 messages: transformedMessages,
             };
 
