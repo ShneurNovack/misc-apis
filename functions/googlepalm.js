@@ -1,6 +1,6 @@
 // worker.js
 export async function onRequest(context) {
-    const palm_url = 'https://generativelanguage.googleapis.com/v1beta2/models/gemini-pro:generateMessage';
+    const palm_url = 'https://generativelanguage.googleapis.com/v1beta2/models/text-bison-002:generateMessage';
     const key_url = 'https://misc-api-1fl.pages.dev/openai.json';
     const request = context.request;
 
