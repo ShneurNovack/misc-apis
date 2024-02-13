@@ -1,6 +1,6 @@
 // worker.js
 export async function onRequest(context) {
-    const palm_url = 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-002:generateMessage';
+    const palm_url = 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage';
     const key_url = 'https://misc-api-1fl.pages.dev/openai.json';
     const request = context.request;
 
