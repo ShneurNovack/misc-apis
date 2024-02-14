@@ -1,31 +1,41 @@
-export async function onRequest(context) {
-    // URLs of the APIs
-    const apiUrls = [
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld1.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld2.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld3.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld4.json"
-    ];
+async function fetchAllQuotes() {
+  const urls = [
+    'https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld1.json',
+    'https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld2.json',
+    'https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld3.json',
+    'https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld4.json'
+  ];
 
-    // Fetch all APIs simultaneously
-    const fetchPromises = apiUrls.map(url => fetch(url).then(res => res.json()));
+  try {
+    // Fetch all URLs concurrently with error handling for each request
+    const responses = await Promise.all(urls.map(url => 
+      fetch(url).then(response => response.json().catch(error => {
+        console.error(`Error parsing JSON from ${url}:`, error);
+        return null; // Return null or an appropriate error indicator for this URL
+      }))
+      .catch(error => {
+        console.error(`Error fetching ${url}:`, error);
+        return null; // Return null or an appropriate error indicator for this URL
+      })
+    ));
 
-    try {
-        // Wait for all fetch operations to complete
-        const results = await Promise.all(fetchPromises);
+    // Filter out any failed fetches or JSON parses and combine the quotes arrays
+    const combinedQuotes = responses.reduce((acc, current) => {
+      if (current && current.quotes) {
+        acc.quotes = acc.quotes.concat(current.quotes);
+      }
+      return acc;
+    }, { quotes: [] }); // Initial accumulator with an empty quotes array
 
-        // Combine the "quotes" arrays from each API's response
-        const combinedQuotes = results.reduce((acc, curr) => {
-            if (curr && curr.quotes) {
-                return acc.concat(curr.quotes);
-            }
-            return acc;
-        }, []);
-
-        return new Response(JSON.stringify({quotes: combinedQuotes}), {
-            headers: { 'Content-Type': 'application/json' },
-        });
-    } catch (error) {
-        return new Response(`Error fetching data: ${error.toString()}`, { status: 500 });
-    }
+    // Now combinedQuotes contains all successfully fetched quotes
+    return combinedQuotes;
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return { quotes: [] }; // Return an empty structure in case of overall failure
+  }
 }
+
+// Example of using the function
+fetchAllQuotes().then(data => {
+  console.log(data); // `data` will contain combined quotes, excluding any that resulted in errors
+});
