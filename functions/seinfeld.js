@@ -1,9 +1,9 @@
 export async function onRequest(context) {
     const apiUrls = [
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld1.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld2.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld3.json",
-        "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld4.json"
+        "https://api.reshapecreative.com/seinfeld/seinfeld1.json",
+        "https://api.reshapecreative.com/seinfeld/seinfeld2.json",
+        "https://api.reshapecreative.com/seinfeld/seinfeld3.json",
+        "https://api.reshapecreative.com/seinfeld/seinfeld4.json"
     ];
 
     const fetchPromises = apiUrls.map(url =>
