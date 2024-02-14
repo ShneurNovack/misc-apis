@@ -6,23 +6,31 @@ export async function onRequest(context) {
         "https://shneurcors.herokuapp.com/https://api.reshapecreative.com/seinfeld/seinfeld4.json"
     ];
 
-    const fetchPromises = apiUrls.map(url => 
+    const fetchPromises = apiUrls.map(url =>
         fetch(url)
-            .then(res => res.text()) // First get the response as text
-            .then(text => {
-                try {
-                    return JSON.parse(text); // Try parsing as JSON
-                } catch (error) {
-                    console.error(`Error parsing JSON from URL ${url}: ${error}`);
-                    return { quotes: [] }; // Return an empty quotes array on error
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch ${url}: ${res.statusText}`);
                 }
+                return res.json();
             })
-            .catch(error => console.error(`Error fetching data for URL ${url}: ${error}`))
+            .then(data => {
+                if (!data || !Array.isArray(data.quotes)) {
+                    console.log(`No quotes found in data from ${url}`);
+                    return [];
+                }
+                return data.quotes;
+            })
+            .catch(error => {
+                console.error(`Error fetching or parsing data for ${url}: ${error}`);
+                return []; // Return an empty array to keep the structure
+            })
     );
 
     try {
         const results = await Promise.all(fetchPromises);
-        const combinedQuotes = results.reduce((acc, curr) => acc.concat(curr.quotes), []);
+        // Flatten the array of arrays into a single array of quotes
+        const combinedQuotes = results.flat();
 
         return new Response(JSON.stringify({quotes: combinedQuotes}), {
             headers: { 'Content-Type': 'application/json' },
