@@ -1,0 +1,53 @@
+.s-option {
+    background: #c6e2e2;
+    padding: 20px;
+    border: solid 3px rgba(255, 255, 255, 0);
+    cursor: pointer;
+}
+.s-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #354d6e;
+    margin-bottom: 5px;
+}
+.s-price {
+    font-size: 30px;
+    color: #354d6e;
+    margin-bottom: 5px;
+}
+.s-info {
+    color: #354d6e;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.selected .s-option {
+    border: solid 3px #354d6e;
+}
+
+#cid_3 .form-radio {
+  display: none;
+}
+#cid_3 .form-single-column {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.form-radio-item.clear-left {
+    width: 45%;
+    margin: 10px;
+}
+.form-radio-item label  {
+    height: 100% !important;
+}
+.form-radio-item label  span {
+    height: 100% !important;
+    display: flex;
+}
+
+
+@media screen and (max-width: 425px) {
+.form-radio-item.clear-left {
+    width: 100%;
+    margin: 10px;
+}
+}
