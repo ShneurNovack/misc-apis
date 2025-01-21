@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         document.head.appendChild(style);
 
-document.addEventListener("DOMContentLoaded", function () {
   // Data object containing the HTML content for each option
   const optionContent = {
     "VISIONARY": `
@@ -155,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="s-info">Name listed on event materials</div>
       </div>
     `
-  };
 
   // Loop through each radio button and add the corresponding HTML content
   document.querySelectorAll('.form-radio-item').forEach(item => {
@@ -200,7 +198,6 @@ const sponsorLevels = {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
   // Define guest field sets with their corresponding form line IDs, individual field IDs, and notes
   
   
@@ -477,7 +474,6 @@ const guestFieldSets = [
   hideAllGuestFields();
   toggleFormLine("id_76", false); // Initially hide #id_76
   toggleFormLine("id_73", false); // Initially hide #id_73
-});
 
     } else {
         console.log('Page ID 6747880 not detected. No changes made.');
