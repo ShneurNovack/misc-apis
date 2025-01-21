@@ -1,8 +1,12 @@
-if (document.location.href.indexOf('6747880') > -1) {
-    // Add CSS dynamically
-    const style = document.createElement('style');
-    style.innerHTML = `
-.s-option {
+document.addEventListener("DOMContentLoaded", function () {
+    // Check if the current page ID is 6747880
+    if (document.location.href.indexOf('6747880') > -1) {
+        console.log('Page ID 6747880 detected. Adding CSS and executing custom script.');
+
+        // Add CSS dynamically
+        const style = document.createElement('style');
+        style.innerHTML = `
+           .s-option {
     background: #c6e2e2;
     padding: 20px;
     border: solid 3px rgba(255, 255, 255, 0);
@@ -55,14 +59,11 @@ if (document.location.href.indexOf('6747880') > -1) {
     margin: 10px;
 }
 }
-    `;
-    document.head.appendChild(style);
 
-    // Add JavaScript dynamically
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.innerHTML = `
-        document.addEventListener("DOMContentLoaded", function () {
+        `;
+        document.head.appendChild(style);
+
+document.addEventListener("DOMContentLoaded", function () {
   // Data object containing the HTML content for each option
   const optionContent = {
     "VISIONARY": `
@@ -477,6 +478,8 @@ const guestFieldSets = [
   toggleFormLine("id_76", false); // Initially hide #id_76
   toggleFormLine("id_73", false); // Initially hide #id_73
 });
-    `;
-    document.body.appendChild(script);
-}
+
+    } else {
+        console.log('Page ID 6747880 not detected. No changes made.');
+    }
+});
