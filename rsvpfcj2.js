@@ -1,10 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Assuming Co object and its properties are defined elsewhere
-    var ArticleId = Co.ArticleId;
-
-    // Check if the page's ArticleId matches the specific IDs
-    if (ArticleId === 6747880 || ArticleId === 6756607) {
-  
+document.addEventListener("DOMContentLoaded", function () {
   // Data object containing the HTML content for each option
   const optionContent = {
     "VISIONARY": `
@@ -418,9 +412,4 @@ const guestFieldSets = [
   hideAllGuestFields();
   toggleFormLine("id_76", false); // Initially hide #id_76
   toggleFormLine("id_73", false); // Initially hide #id_73
-
-        console.log('ArticleId value:', ArticleId);
-
-        // You can perform further actions with ArticleId here
-    }
 });
