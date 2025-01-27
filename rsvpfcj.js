@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   // Data object containing the HTML content for each option
   const optionContent = {
     "VISIONARY": `
