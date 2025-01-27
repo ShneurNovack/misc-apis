@@ -4,11 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check if the page's ArticleId matches the specific IDs
     if (ArticleId === 6747880 || ArticleId === 6756607) {
-        // Your existing JavaScript code
-        console.log('ArticleId value:', ArticleId);
-
-        // You can perform further actions with ArticleId here
-    }
   
   // Data object containing the HTML content for each option
   const optionContent = {
@@ -423,4 +418,9 @@ const guestFieldSets = [
   hideAllGuestFields();
   toggleFormLine("id_76", false); // Initially hide #id_76
   toggleFormLine("id_73", false); // Initially hide #id_73
+
+        console.log('ArticleId value:', ArticleId);
+
+        // You can perform further actions with ArticleId here
+    }
 });
