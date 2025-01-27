@@ -1,5 +1,6 @@
 (function () {
   // Data object containing the HTML content for each option
+console.log('testing 123');
   const optionContent = {
     "VISIONARY": `
       <div class="s-option" id="visionary">
