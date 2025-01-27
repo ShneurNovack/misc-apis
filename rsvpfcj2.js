@@ -111,7 +111,7 @@
       item.classList.add('selected');
     });
   });
-});
+})();
 
 
 // Define sponsor levels guest amounts
@@ -135,7 +135,7 @@ const sponsorLevels = {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   // Define guest field sets with their corresponding form line IDs, individual field IDs, and notes
   
   
@@ -412,4 +412,4 @@ const guestFieldSets = [
   hideAllGuestFields();
   toggleFormLine("id_76", false); // Initially hide #id_76
   toggleFormLine("id_73", false); // Initially hide #id_73
-});
+})();
