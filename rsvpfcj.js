@@ -1,4 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function() {
+    // Assuming Co object and its properties are defined elsewhere
+    var ArticleId = Co.ArticleId;
+
+    // Check if the page's ArticleId matches the specific IDs
+    if (ArticleId === 6747880 || ArticleId === 6756607) {
+        // Your existing JavaScript code
+        console.log('ArticleId value:', ArticleId);
+
+        // You can perform further actions with ArticleId here
+    }
+  
   // Data object containing the HTML content for each option
   const optionContent = {
     "VISIONARY": `
